@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,7 +28,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 a {
@@ -39,29 +40,6 @@ button {
   font: inherit;
 }
 
-.page-glow {
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-  filter: blur(90px);
-  opacity: 0.14;
-  border-radius: 50%;
-}
-.glow-one {
-  width: 440px;
-  height: 440px;
-  background: #7c3aed;
-  top: 100px;
-  left: -220px;
-}
-.glow-two {
-  width: 400px;
-  height: 400px;
-  background: #0891b2;
-  top: 650px;
-  right: -250px;
-}
-
 /* ============ HEADER ============ */
 .site-header {
   height: 82px;
@@ -71,15 +49,13 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-
-  /* NEW: sticky header with blur */
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 11, 16, 0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(10, 11, 16, 0.6) !important; /* Thoda aur transparent */
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 .brand {
@@ -111,6 +87,8 @@ button {
 }
 .nav-links a {
   transition: 0.2s;
+  position: relative;
+  padding: 4px 0;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -185,11 +163,13 @@ button {
 }
 
 .gradient-text {
-  color: #c4b5fd; /* fallback */
+  filter: drop-shadow(0px 0px 20px rgba(167, 139, 250, 0.4));
+  color: #c4b5fd;
   background: linear-gradient(100deg, #c4b5fd 10%, #67e8f9 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  background-size: 200% auto;
 }
 
 .hero-intro {
@@ -216,7 +196,9 @@ button {
   border-radius: 11px;
   font-weight: 700;
   font-size: 0.88rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .button:hover {
   transform: translateY(-3px);
@@ -260,7 +242,6 @@ button {
   position: absolute;
   border: 1px solid rgba(167, 139, 250, 0.17);
   border-radius: 50%;
-  transform: rotate(-25deg);
 }
 .orbit-a {
   width: 430px;
@@ -281,8 +262,6 @@ button {
   padding: 23px;
   background: linear-gradient(145deg, #1b1e2b, #10121a);
   box-shadow: 0 25px 90px #0008;
-  transform: rotate(2deg);
-  animation: float 6s ease-in-out infinite;
 }
 
 .card-top {
@@ -298,19 +277,36 @@ button {
 }
 
 .avatar {
+  position: relative;
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  overflow: hidden;
   margin: 0 auto 25px;
-  border: 4px solid #22d3ee;
-  box-shadow: 0 0 30px rgba(34, 211, 238, 0.25);
+  padding: 4px; /* Border ki jagah */
+  background: linear-gradient(135deg, #a78bfa, #67e8f9, #a78bfa);
+  background-size: 200% 200%;
+  animation: borderSpin 4s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .avatar img {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: cover;
-  display: block;
+  border: 3px solid #10121a; /* Inner border for spacing */
+  background: #10121a;
+}
+
+@keyframes borderSpin {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 .profile-card h2 {
@@ -322,6 +318,7 @@ button {
   text-align: center;
   color: #9ba1b4;
   font-size: 0.85rem;
+  min-height: 1.5rem;
 }
 .mini-divider {
   height: 1px;
@@ -396,12 +393,10 @@ button {
 .chip-code {
   top: 54px;
   right: -2px;
-  animation: float 5s ease-in-out infinite;
 }
 .chip-web {
   bottom: 45px;
   left: -5px;
-  animation: float 7s ease-in-out infinite reverse;
 }
 
 .scroll-cue {
@@ -434,6 +429,7 @@ button {
   display: block;
   color: #9d8bfa;
   margin-bottom: 12px;
+  position: relative;
 }
 .section-heading h2 {
   font: 700 clamp(2.1rem, 4vw, 3.15rem)/1.2 var(--display);
@@ -485,8 +481,13 @@ button {
 .fact {
   padding: 22px;
   border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #11131b;
+  background: linear-gradient(
+    145deg,
+    rgba(21, 24, 36, 0.7),
+    rgba(16, 18, 26, 0.4)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .fact-number {
   font: 700 2.2rem var(--display);
@@ -531,15 +532,10 @@ button {
   background: linear-gradient(145deg, #131520, #0e1016);
   padding: 23px;
   border-radius: 17px;
-  transition: transform 0.2s, border-color 0.2s;
-
-  /* NEW: flex for equal heights */
   display: flex;
   flex-direction: column;
-}
-.skill-card:hover {
-  transform: translateY(-4px);
-  border-color: #8b7cf44a;
+  position: relative;
+  overflow: hidden;
 }
 .skill-icon {
   width: 43px;
@@ -574,6 +570,7 @@ button {
   background: #17363d;
   color: #67e8f9;
 }
+
 .skill-card h3 {
   font: 600 1.08rem var(--display);
   margin-bottom: 7px;
@@ -676,12 +673,7 @@ button {
   border: 1px solid var(--line);
   border-radius: 17px;
   background: linear-gradient(145deg, #151824, #10121a);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.work-featured-card:hover {
-  transform: translateY(-6px);
-  border-color: #a78bfa75;
-  box-shadow: 0 18px 45px #0005;
+  position: relative;
 }
 .work-featured-image {
   height: 190px;
@@ -698,10 +690,6 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform 0.5s ease;
-}
-.work-featured-card:hover .work-featured-image img {
-  transform: scale(1.045);
 }
 .work-image-link {
   position: absolute;
@@ -716,6 +704,7 @@ button {
   opacity: 0;
   transform: translateY(5px);
   transition: 0.25s ease;
+  z-index: 2;
 }
 .work-featured-card:hover .work-image-link {
   opacity: 1;
@@ -726,6 +715,8 @@ button {
   display: flex;
   flex-direction: column;
   min-height: 260px;
+  position: relative;
+  z-index: 2;
 }
 .work-card-top {
   display: flex;
@@ -833,7 +824,10 @@ button {
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #11131b;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 .work-mini-card:hover {
   transform: translateY(-3px);
@@ -849,12 +843,30 @@ button {
   border-radius: 11px;
   font: 700 0.78rem var(--display);
 }
-.mini-purple { color: #c4b5fd; background: #8b5cf626; }
-.mini-cyan   { color: #67e8f9; background: #0891b226; }
-.mini-green  { color: #86efac; background: #16a34a26; }
-.mini-orange { color: #fdba74; background: #ea580c26; }
-.mini-pink   { color: #f9a8d4; background: #db277726; }
-.mini-blue   { color: #93c5fd; background: #2563eb26; }
+.mini-purple {
+  color: #c4b5fd;
+  background: #8b5cf626;
+}
+.mini-cyan {
+  color: #67e8f9;
+  background: #0891b226;
+}
+.mini-green {
+  color: #86efac;
+  background: #16a34a26;
+}
+.mini-orange {
+  color: #fdba74;
+  background: #ea580c26;
+}
+.mini-pink {
+  color: #f9a8d4;
+  background: #db277726;
+}
+.mini-blue {
+  color: #93c5fd;
+  background: #2563eb26;
+}
 
 .work-mini-info {
   display: flex;
@@ -1026,9 +1038,7 @@ button {
   color: var(--cyan);
 }
 
-/* ============ NEW IMPROVEMENTS ============ */
-
-/* Focus visible (accessibility) */
+/* ============ ANIMATIONS & EXTRAS ============ */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--cyan);
@@ -1036,48 +1046,382 @@ button:focus-visible {
   border-radius: 6px;
 }
 
-/* Scroll reveal animation */
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #a78bfa, #67e8f9);
+  z-index: 9999;
+  box-shadow: 0 0 12px #67e8f9aa;
+  transition: width 0.1s linear;
+}
+
+/* Hero Entrance */
+.hero-copy > * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroSlideUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.hero-copy > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.hero-copy > *:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.hero-copy > *:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.hero-copy > *:nth-child(4) {
+  animation-delay: 0.55s;
+}
+.hero-copy > *:nth-child(5) {
+  animation-delay: 0.7s;
+}
+@keyframes heroSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Text Shimmer */
+.gradient-text {
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Orbits */
+.orbit-a {
+  animation: orbitSpin 30s linear infinite;
+}
+.orbit-b {
+  animation: orbitSpin 40s linear infinite reverse;
+}
+@keyframes orbitSpin {
+  from {
+    transform: rotate(-25deg);
+  }
+  to {
+    transform: rotate(335deg);
+  }
+}
+
+/* Status Dot */
+.status-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow:
+      0 0 14px #4ade80,
+      0 0 0 0 #4ade8080;
+  }
+  50% {
+    box-shadow:
+      0 0 14px #4ade80,
+      0 0 0 8px #4ade8000;
+  }
+}
+
+/* Typing Cursor */
+.profile-role::after {
+  content: "|";
+  color: #67e8f9;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  font-weight: 400;
+}
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Section Line Grow */
+.section-heading.visible .section-kicker {
+  padding-left: 22px;
+  transition: padding-left 0.4s ease;
+}
+.section-heading.visible .section-kicker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  background: linear-gradient(90deg, #a78bfa, #67e8f9);
+  transform: translateY(-50%);
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, #a78bfa, #67e8f9);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* Scroll Reveal Base */
 .reveal {
   opacity: 0;
   transform: translateY(25px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Floating animation for hero */
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(2deg); }
-  50%      { transform: translateY(-10px) rotate(2deg); }
+.timeline-item.reveal {
+  transform: translateX(-30px);
+}
+.timeline-item.reveal.visible {
+  transform: translateX(0);
 }
 
-/* Mobile menu overlay + body lock handled in JS */
+.skills-grid .skill-card.reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+.skills-grid .skill-card.reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.skills-grid .skill-card.reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+.skills-grid .skill-card.reveal:nth-child(4) {
+  transition-delay: 0.24s;
+}
+.skills-grid .skill-card.reveal:nth-child(5) {
+  transition-delay: 0.32s;
+}
+.skills-grid .skill-card.reveal:nth-child(6) {
+  transition-delay: 0.4s;
+}
 
-/* Mobile heading breaks */
-@media (max-width: 650px) {
-  .hero h1 br {
+/* Card Hover Effects (Desktop Only) */
+@media (hover: hover) {
+  .profile-card {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .button-primary,
+  .header-cta {
+    transition:
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.25s;
+  }
+  .work-featured-card {
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .work-featured-card:hover {
+    transform: translateY(-6px);
+    border-color: #a78bfa75;
+    box-shadow: 0 18px 45px #0005;
+  }
+  .work-featured-card:hover .work-featured-image img {
+    transform: scale(1.045);
+  }
+  .skill-card:hover {
+    transform: translateY(-4px);
+    border-color: #8b7cf44a;
+  }
+  .fact:hover {
+    transform: translateY(-4px);
+    border-color: #a78bfa60;
+    box-shadow: 0 12px 30px rgba(167, 139, 250, 0.15);
+  }
+  .education-card:hover {
+    transform: translateX(6px);
+    border-color: #a78bfa50;
+  }
+  .social-links a:hover {
+    transform: translateY(-3px) scale(1.05);
+  }
+
+  .skill-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      200px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(103, 232, 249, 0.12),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .skill-card:hover::before {
+    opacity: 1;
+  }
+  .button:hover span,
+  .text-link:hover span,
+  .work-visit-link:hover span {
+    animation: arrowBounce 0.6s ease;
+  }
+}
+
+/* Cursor Glow */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.12),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+/* =========================================
+   MARQUEE RIBBON (RESPONSIVE & SEAMLESS)
+========================================= */
+.ribbon {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #0d0f16;
+  padding: 22px 0;
+  margin: 0 0 0 0;
+  width: 100%;
+  position: relative;
+}
+
+.ribbon::before,
+.ribbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ribbon::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg) 10%, transparent);
+}
+.ribbon::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg) 10%, transparent);
+}
+
+.ribbon-track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  color: #8a8fa3;
+  font: 500 1rem var(--display);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.ribbon-track span {
+  color: #e1e4ef;
+  font-weight: 600;
+}
+.ribbon-track span:nth-child(even) {
+  color: #a78bfa;
+  font-size: 0.8rem;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.ribbon:hover .ribbon-track {
+  animation-play-state: paused;
+}
+
+/* =========================================
+   PERFECT RESPONSIVE FIXES (Tablet & Mobile)
+========================================= */
+
+/* Tablet (Max 900px) */
+@media (max-width: 900px) {
+  .cursor-glow {
     display: none;
   }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .nav-links {
+    gap: 15px;
   }
-  .profile-card,
-  .chip-code,
-  .chip-web {
-    animation: none !important;
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding-top: 75px;
   }
-}
+  .hero-copy {
+    max-width: 650px;
+  }
+  .hero-visual {
+    min-height: 430px;
+    transform: scale(0.9);
+    margin-top: -20px;
+  }
+  .scroll-cue {
+    display: none;
+  }
+  .about-grid {
+    gap: 30px;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-/* ============ RESPONSIVE ============ */
-@media (max-width: 950px) {
+  .ribbon {
+    padding: 16px 0;
+    margin: 50px 0 0 0;
+  }
+  .ribbon-track {
+    gap: 20px;
+    font-size: 0.85rem;
+    animation-duration: 30s;
+  }
+  .ribbon::before,
+  .ribbon::after {
+    width: 60px;
+  }
+
   .work-featured-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1092,32 +1436,7 @@ button:focus-visible {
   }
 }
 
-@media (max-width: 900px) {
-  .nav-links {
-    gap: 15px;
-  }
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 25px;
-    padding-top: 75px;
-  }
-  .hero-copy {
-    max-width: 650px;
-  }
-  .hero-visual {
-    min-height: 430px;
-  }
-  .scroll-cue {
-    display: none;
-  }
-  .about-grid {
-    gap: 30px;
-  }
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
+/* Mobile (Max 650px) */
 @media (max-width: 650px) {
   .site-header {
     height: 70px;
@@ -1145,6 +1464,7 @@ button:focus-visible {
   .nav-links.open {
     display: flex;
   }
+
   .section-wrap {
     padding-left: 20px;
     padding-right: 20px;
@@ -1156,11 +1476,18 @@ button:focus-visible {
   .hero h1 {
     font-size: clamp(2.8rem, 12vw, 4rem);
   }
+  .hero h1 br {
+    display: none;
+  }
   .hero-visual {
     min-height: 400px;
+    transform: none;
+    margin-top: 0;
   }
   .profile-card {
     width: 265px;
+    animation: floatMobile 6s ease-in-out infinite !important;
+    transform: none !important;
   }
   .orbit-a {
     width: 330px;
@@ -1176,8 +1503,32 @@ button:focus-visible {
     left: -2px;
     bottom: 30px;
   }
+  .hero-actions {
+    gap: 10px;
+  }
+  .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ribbon {
+    padding: 12px 0;
+    margin: 40px 0 0 0;
+  }
+  .ribbon-track {
+    gap: 15px;
+    font-size: 0.75rem;
+    animation-duration: 25s;
+  }
+  .ribbon-track span:nth-child(even) {
+    font-size: 0.65rem;
+  }
+
   .section {
     padding-top: 75px;
+  }
+  #skills.section {
+    padding-top: 50px;
   }
   .about-grid {
     grid-template-columns: 1fr;
@@ -1191,21 +1542,26 @@ button:focus-visible {
   .skills-grid {
     grid-template-columns: 1fr;
   }
+
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 10px;
-    padding-left: 22px;
+    padding-left: 15px;
+    margin-left: 5px;
   }
   .timeline-date {
     padding-top: 0;
   }
   .education-card {
+    flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
     padding: 20px;
   }
   .education-mark {
     display: none;
   }
+
   .contact-panel {
     padding: 35px 24px;
   }
@@ -1214,6 +1570,7 @@ button:focus-visible {
     gap: 15px;
     margin-top: 30px;
   }
+
   .footer {
     padding: 22px 20px;
     gap: 15px;
@@ -1223,6 +1580,7 @@ button:focus-visible {
     order: 3;
     width: 100%;
   }
+
   .work-featured-grid {
     grid-template-columns: 1fr;
   }
@@ -1237,6 +1595,7 @@ button:focus-visible {
   }
   .work-featured-content {
     min-height: auto;
+    padding: 15px;
   }
   .work-more-heading {
     align-items: flex-start;
@@ -1247,372 +1606,43 @@ button:focus-visible {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  .work-mini-card {
-    padding: 13px;
-  }
   .work-bottom {
     align-items: flex-start;
     flex-direction: column;
   }
 }
 
-/* Reduced motion (project cards) */
-@media (prefers-reduced-motion: reduce) {
-  .work-featured-card,
-  .work-featured-image img,
-  .work-mini-card,
-  .work-visit-link span {
-    transition: none;
+/* Extra Small Devices (Max 400px) */
+@media (max-width: 400px) {
+  .hero h1 {
+    font-size: 2.3rem !important;
+  }
+  .profile-card {
+    width: 240px !important;
+    padding: 15px !important;
+  }
+  .avatar {
+    width: 180px !important;
+    height: 180px !important;
+  }
+  .ribbon-track {
+    font-size: 0.7rem;
+    gap: 10px;
+    animation-duration: 20s;
   }
 }
 
-/* =========================================
-   ADVANCED ANIMATIONS — ADD AT END OF FILE
-========================================= */
-
-/* ---------- 1. Scroll progress bar ---------- */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  background: linear-gradient(90deg, #a78bfa, #67e8f9);
-  z-index: 9999;
-  box-shadow: 0 0 12px #67e8f9aa;
-  transition: width 0.1s linear;
-}
-
-/* ---------- 2. Hero text staggered entrance ---------- */
-.hero-copy > * {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: heroSlideUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-.hero-copy > *:nth-child(1) { animation-delay: 0.1s; }
-.hero-copy > *:nth-child(2) { animation-delay: 0.25s; }
-.hero-copy > *:nth-child(3) { animation-delay: 0.4s; }
-.hero-copy > *:nth-child(4) { animation-delay: 0.55s; }
-.hero-copy > *:nth-child(5) { animation-delay: 0.7s; }
-
-@keyframes heroSlideUp {
-  to {
-    opacity: 1;
+@keyframes floatMobile {
+  0%,
+  100% {
     transform: translateY(0);
   }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-/* ---------- 3. Gradient text shimmer ---------- */
-.gradient-text {
-  background-size: 200% auto;
-  animation: shimmer 4s linear infinite;
-}
-@keyframes shimmer {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-/* ---------- 4. Orbit slow rotation ---------- */
-.orbit-a {
-  animation: orbitSpin 30s linear infinite;
-}
-.orbit-b {
-  animation: orbitSpin 40s linear infinite reverse;
-}
-@keyframes orbitSpin {
-  from { transform: rotate(-25deg); }
-  to   { transform: rotate(335deg); }
-}
-
-/* ---------- 5. Status dot pulse ---------- */
-.status-dot {
-  animation: pulseDot 2s ease-in-out infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { box-shadow: 0 0 14px #4ade80, 0 0 0 0 #4ade8080; }
-  50%      { box-shadow: 0 0 14px #4ade80, 0 0 0 8px #4ade8000; }
-}
-
-/* ---------- 6. Profile role typing cursor ---------- */
-.profile-role::after {
-  content: "|";
-  color: #67e8f9;
-  margin-left: 2px;
-  animation: blink 1s step-end infinite;
-  font-weight: 400;
-}
-@keyframes blink {
-  0%, 50%   { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-/* ---------- 7. Profile card 3D tilt ---------- */
-.profile-card {
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* ---------- 8. Magnetic buttons ---------- */
-.button-primary,
-.header-cta {
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s;
-  will-change: transform;
-}
-
-/* ---------- 9. Project card 3D + spotlight ---------- */
-.work-featured-card {
-  transform-style: preserve-3d;
-  will-change: transform;
-  position: relative;
-}
-.work-featured-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    400px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(167, 139, 250, 0.15),
-    transparent 60%
-  );
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-  z-index: 1;
-}
-.work-featured-card:hover::before {
-  opacity: 1;
-}
-
-/* ---------- 10. Skill card mouse-follow glow ---------- */
-.skill-card {
-  position: relative;
-  overflow: hidden;
-}
-.skill-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    200px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(103, 232, 249, 0.12),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-.skill-card:hover::before {
-  opacity: 1;
-}
-
-/* ---------- 11. Image reveal mask ---------- */
-.work-featured-image img {
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1s cubic-bezier(0.2, 0.8, 0.2, 1),
-              transform 0.5s ease;
-}
-.work-featured-image.image-visible img,
-.work-featured-card:hover .work-featured-image img {
-  clip-path: inset(0 0 0 0);
-}
-
-/* ---------- 12. Timeline slide-in ---------- */
-.timeline-item.reveal {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.timeline-item.reveal.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* ---------- 13. Skill card stagger ---------- */
-.skills-grid .skill-card.reveal:nth-child(1) { transition-delay: 0s; }
-.skills-grid .skill-card.reveal:nth-child(2) { transition-delay: 0.08s; }
-.skills-grid .skill-card.reveal:nth-child(3) { transition-delay: 0.16s; }
-.skills-grid .skill-card.reveal:nth-child(4) { transition-delay: 0.24s; }
-.skills-grid .skill-card.reveal:nth-child(5) { transition-delay: 0.32s; }
-.skills-grid .skill-card.reveal:nth-child(6) { transition-delay: 0.4s; }
-
-/* ---------- 14. Contact orb pulse ---------- */
-.contact-orb {
-  animation: orbPulse 5s ease-in-out infinite;
-}
-@keyframes orbPulse {
-  0%, 100% { transform: scale(1);   opacity: 0.13; }
-  50%      { transform: scale(1.2); opacity: 0.22; }
-}
-
-/* ---------- 15. Social link icon bounce ---------- */
-.social-links a {
-  transition: transform 0.2s, color 0.2s;
-  display: inline-block;
-}
-.social-links a:hover {
-  transform: translateY(-3px) scale(1.05);
-}
-
-/* ---------- 16. Featured card gradient border animation ---------- */
-.work-featured-card {
-  position: relative;
-}
-.work-featured-card::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    transparent 30%,
-    #a78bfa 50%,
-    #67e8f9 70%,
-    transparent 90%
-  );
-  background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-.work-featured-card:hover::after {
-  opacity: 1;
-  animation: borderGlow 3s linear infinite;
-}
-@keyframes borderGlow {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-/* ---------- 17. Section heading kicker line ---------- */
-.section-kicker {
-  position: relative;
-  padding-left: 0;
-  transition: padding-left 0.4s ease;
-}
-.section-heading.visible .section-kicker {
-  padding-left: 22px;
-}
-.section-heading.visible .section-kicker::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 14px;
-  height: 2px;
-  background: linear-gradient(90deg, #a78bfa, #67e8f9);
-  transform: translateY(-50%);
-  animation: lineGrow 0.6s ease forwards;
-}
-@keyframes lineGrow {
-  from { width: 0; }
-  to   { width: 14px; }
-}
-
-/* ---------- 18. Back-to-top progress ring ---------- */
-.back-top {
-  position: relative;
-  padding-bottom: 3px;
-  overflow: hidden;
-}
-.back-top-ring {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 100%;
-  background: linear-gradient(90deg, #a78bfa, #67e8f9);
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 0.1s linear;
-}
-
-/* ---------- 19. Cursor glow follower ---------- */
-.cursor-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(167, 139, 250, 0.12),
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: screen;
-  will-change: transform;
-}
-
-/* ---------- 20. Fact number glow on hover ---------- */
-.fact {
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.fact:hover {
-  transform: translateY(-4px);
-  border-color: #a78bfa60;
-  box-shadow: 0 12px 30px rgba(167, 139, 250, 0.15);
-}
-
-/* ---------- 21. Education card hover ---------- */
-.education-card {
-  transition: transform 0.3s, border-color 0.3s;
-}
-.education-card:hover {
-  transform: translateX(6px);
-  border-color: #a78bfa50;
-}
-
-/* ---------- 22. Nav link underline ---------- */
-.nav-links a {
-  position: relative;
-  padding: 4px 0;
-}
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 1.5px;
-  background: linear-gradient(90deg, #a78bfa, #67e8f9);
-  transition: width 0.3s ease;
-}
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  width: 100%;
-}
-
-/* ---------- 23. Scroll cue bounce ---------- */
-.scroll-cue span {
-  animation: scrollLinePulse 2s ease-in-out infinite;
-}
-@keyframes scrollLinePulse {
-  0%, 100% { transform: scaleX(1); opacity: 0.6; }
-  50%      { transform: scaleX(1.4); opacity: 1; }
-}
-
-/* ---------- 24. Button arrow micro-motion ---------- */
-.button:hover span,
-.text-link:hover span,
-.work-visit-link:hover span {
-  animation: arrowBounce 0.6s ease;
-}
-@keyframes arrowBounce {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(4px, -4px); }
-}
-
-/* ---------- 25. Reduced motion override ---------- */
+/* Reduced Motion Overrides */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1634,11 +1664,9 @@ button:focus-visible {
   .work-featured-image img {
     clip-path: none !important;
   }
-}
-
-/* ---------- Mobile: hide heavy stuff ---------- */
-@media (max-width: 900px) {
-  .cursor-glow {
-    display: none;
+  .profile-card,
+  .chip-code,
+  .chip-web {
+    animation: none !important;
   }
 }
